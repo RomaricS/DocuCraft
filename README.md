@@ -5,30 +5,32 @@ This is a react app that let users create documentation and tutorials
 
 ## 📌 Project Overview
 
-A web application that allows authenticated users to create, edit, manage, and export rich-text work guides. The app will feature a Microsoft Word-like editor, guide management dashboard, and PDF export functionality.
+A web application that allows authenticated users to create, edit, manage, and export rich-text work guides. The app features a Microsoft Word-like editor, guide management dashboard, and PDF export functionality.
+
+This version leverages Backend-as-a-Service (BaaS) platforms to reduce infrastructure overhead and accelerate development.
 
 ---
 
 ## 🧱 Architecture Overview
 
-### 🖼️ High-Level System Architecture
+### 🖼️ High-Level System Architecture (BaaS-First)
 
 ```plaintext
-+------------------+       +------------------+       +------------------+
-|   Frontend (SPA) | <---> |   Backend API    | <---> |   Database       |
-|  (React + Editor)|       | (Node.js + REST) |       | (PostgreSQL)     |
-+------------------+       +------------------+       +------------------+
++------------------+       +--------------------------+
+|   Frontend (SPA) | <---> |  BaaS Platform (API + DB)|
+|  (React + Editor)|       | (Firebase / Appwrite)    |
++------------------+       +--------------------------+
          |                          |
          |                          v
          |                  +------------------+
          |                  |  Auth Provider   |
-         |                  | (e.g. Firebase)  |
+         |                  | (Firebase/Auth0) |
          |                  +------------------+
          |
          v
 +------------------+
 |  PDF Export Tool |
-| (jsPDF / Puppeteer) |
+| (jsPDF / html2pdf)|
 +------------------+
 
 
@@ -42,12 +44,14 @@ A web application that allows authenticated users to create, edit, manage, and e
 | Editor        | TipTap (ProseMirror-based)           | Highly customizable rich text editor |
 | Styling       | TailwindCSS or CSS Modules           | Utility-first or scoped styling |
 | State Mgmt    | React Context + useReducer or Zustand| Lightweight and scalable |
-| Auth          | Firebase Auth or Auth0               | Secure, scalable authentication |
-| Backend       | Node.js + Express                    | RESTful API |
+| Auth          | Appwrite               | Secure, scalable authentication |
+| Backend       | Appwrite DB | BAAS so no need to build my own APIs |
 | Database      | PostgreSQL (via Prisma ORM)          | Relational DB for guides and users |
 | PDF Export    | jsPDF or Puppeteer                   | Client-side or server-side PDF generation |
 | Hosting       | Vercel (frontend) + Railway/Render   | Easy CI/CD and deployment |
 | Storage (opt) | Firebase Storage / S3                | For image uploads in guides |
+
+<table class="t-table" style="border-spacing: 0px;"><thead><tr><th style="opacity: 1;">Layer</th><th style="opacity: 1;">Technology</th><th style="opacity: 1;">Description</th></tr></thead><tbody><tr><td style="opacity: 1;"><strong>Frontend</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://reactjs.org/" initial="start" animate="end" variants="[object Object]" custom="0">React</button></td><td style="opacity: 1;">SPA framework for UI</td></tr><tr><td style="opacity: 1;"><strong>Editor</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://tiptap.dev/" initial="start" animate="end" variants="[object Object]" custom="0">TipTap</button></td><td style="opacity: 1;">Rich text editor (ProseMirror-based)</td></tr><tr><td style="opacity: 1;"><strong>Styling</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://tailwindcss.com/" initial="start" animate="end" variants="[object Object]" custom="0">TailwindCSS</button></td><td style="opacity: 1;">Utility-first CSS framework</td></tr><tr><td style="opacity: 1;"><strong>State Mgmt</strong></td><td style="opacity: 1;">Zustand or React Context</td><td style="opacity: 1;">Lightweight state management</td></tr><tr><td style="opacity: 1;"><strong>Auth</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://appwrite.io/docs/authentication" initial="start" animate="end" variants="[object Object]" custom="0">Appwrite Auth</button></td><td style="opacity: 1;">Built-in email/password and OAuth login</td></tr><tr><td style="opacity: 1;"><strong>Database</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://appwrite.io/docs/databases" initial="start" animate="end" variants="[object Object]" custom="0">Appwrite Database</button></td><td style="opacity: 1;">Stores guide metadata and TipTap JSON</td></tr><tr><td style="opacity: 1;"><strong>Storage</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://appwrite.io/docs/storage" initial="start" animate="end" variants="[object Object]" custom="0">Appwrite Storage</button></td><td style="opacity: 1;">Optional: for image uploads in guides</td></tr><tr><td style="opacity: 1;"><strong>PDF Export</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://github.com/eKoopmans/html2pdf" initial="start" animate="end" variants="[object Object]" custom="0">html2pdf.js</button> or <button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://github.com/parallax/jsPDF" initial="start" animate="end" variants="[object Object]" custom="0">jsPDF</button></td><td style="opacity: 1;">Client-side PDF generation</td></tr><tr><td style="opacity: 1;"><strong>Hosting</strong></td><td style="opacity: 1;"><button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://vercel.com/" initial="start" animate="end" variants="[object Object]" custom="0">Vercel</button> or <button type="button" class="font-bold text-salmon-550 dark:text-midnight-400 hover:underline text-start align-top" data-url="https://www.netlify.com/" initial="start" animate="end" variants="[object Object]" custom="0">Netlify</button></td><td style="opacity: 1;">Deploy frontend</td></tr><tr><td style="opacity: 1;"><strong>CI/CD</strong></td><td style="opacity: 1;">GitHub Actions / Vercel Pipelines</td><td style="opacity: 1;">Continuous deployment and testing</td></tr></tbody></table>
 
 ---
 
@@ -132,7 +136,7 @@ App ├── AuthProvider ├── Router │ ├── /login → LoginPage �
 
 ---
 
-## 🧭 Suggested Milestones
+## 🧭 Milestones
 
 1. ✅ Set up project scaffolding (React + Node + DB)
 2. ✅ Implement authentication
