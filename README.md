@@ -83,10 +83,8 @@ App
 │
 ├── Router
 │   ├── /login           → <LoginPage />
-│   ├── /register        → <RegisterPage />
 │   ├── /dashboard       → <DashboardPage />
 │   ├── /editor/:id      → <EditorPage />
-│   └── /new             → <NewGuidePage />
 │
 ├── components/
 │   ├── <Navbar />             → Top navigation bar
